@@ -3,7 +3,7 @@ import TodoHead from "./components/TodoHead";
 import TodoTemplate from "./components/TodoTemplate";
 import Todolist from "./components/Todolist";
 import Todocreate from "./components/Todocreate";
-import { useReducer, useRef } from "react";
+import { useReducer, useRef, createContext } from "react";
 
 const GlobalStyle = createGlobalStyle`
 body {
@@ -51,6 +51,8 @@ function reducer(state, action) {
   }
 }
 
+export const TodoDispatch = createContext(null);
+
 function App() {
   const [state, dispatch] = useReducer(reducer, initialTodos);
   const nextId = useRef(3);
@@ -85,18 +87,18 @@ function App() {
   };
 
   return (
-    <>
+    <TodoDispatch.Provider value={{ deleteItem: deleteItem, toggle: toggle }}>
       <GlobalStyle />
       <TodoTemplate>
         <TodoHead todos={state.todos}></TodoHead>
-        <Todolist todos={state.todos} deleteItem={deleteItem} toggle={toggle} />
+        <Todolist todos={state.todos} />
         <Todocreate
           inputSave={inputSave}
           plusItem={plusItem}
           input={state.text}
         />
       </TodoTemplate>
-    </>
+    </TodoDispatch.Provider>
   );
 }
 

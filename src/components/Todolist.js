@@ -10,19 +10,12 @@ const TodolistBlock = styled.ul`
   overflow-y: auto;
 `;
 
-function Todolist({ todos, deleteItem, toggle }) {
+function Todolist({ todos }) {
   return (
     <>
       <TodolistBlock>
         {todos.map((todo) => {
-          return (
-            <Todoitem
-              todo={todo}
-              deleteItem={deleteItem}
-              key={todo.id}
-              toggle={toggle}
-            />
-          );
+          return <Todoitem todo={todo} key={todo.id} />;
         })}
       </TodolistBlock>
     </>
