@@ -24,12 +24,20 @@ const TodoHeadBlock = styled.div`
   }
 `;
 
-function TodoHead() {
+function TodoHead({ todos }) {
+  const count = todos.filter((todo) => !todo.done).length;
+  const today = new Date();
+  const dateString = today.toLocaleDateString("ko-kR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  const day = today.toLocaleDateString("ko-kR", { weekday: "long" });
   return (
     <TodoHeadBlock>
-      <h1>2022/06/03</h1>
-      <p className="day">금요일</p>
-      <p className="tasks">할 일 2개 남음</p>
+      <h1>{dateString}</h1>
+      <p className="day">{day} </p>
+      <p className="tasks">할 일 {count}개 남음</p>
     </TodoHeadBlock>
   );
 }

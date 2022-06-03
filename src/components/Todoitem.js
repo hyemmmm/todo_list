@@ -2,19 +2,16 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { MdDelete, MdCheck } from "react-icons/md";
 
-const TodoitemBlock = styled.li`
-  padding: 12px 0;
-  display: flex;
-  align-items: center;
-`;
-
 const Remove = styled.div`
-  display: flex;
   align-items: center;
   justify-content: center;
-  color: black;
+  color: #ced4da;
   font-size: 24px;
   cursor: pointer;
+  display: none;
+  &:hover {
+    color: black;
+  }
 `;
 
 const Text = styled.p`
@@ -25,10 +22,19 @@ const Text = styled.p`
   ${({ done }) =>
     done &&
     css`
-      text-decoration: line-through;
+      color: #ced4da;
     `}
 `;
-
+const TodoitemBlock = styled.li`
+  padding: 12px 0;
+  display: flex;
+  align-items: center;
+  &:hover {
+    ${Remove} {
+      display: flex;
+    }
+  }
+`;
 const CheckCircle = styled.div`
   width: 32px;
   height: 32px;
@@ -49,14 +55,21 @@ const CheckCircle = styled.div`
     `}
 `;
 
-function Todoitem() {
-  const done = true;
+function Todoitem({ todo, deleteItem, toggle }) {
+  const { done, text, id } = todo;
   return (
     <>
       <TodoitemBlock>
-        <CheckCircle done={done}>{done && <MdCheck />}</CheckCircle>
-        <Text done={done}> 투두 리스트 만들기</Text>
-        <Remove>
+        <CheckCircle
+          onClick={() => {
+            toggle(todo.id);
+          }}
+          done={done}
+        >
+          {done && <MdCheck />}
+        </CheckCircle>
+        <Text done={done}>{text}</Text>
+        <Remove onClick={() => deleteItem(id)}>
           <MdDelete />
         </Remove>
       </TodoitemBlock>

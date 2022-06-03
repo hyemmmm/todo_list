@@ -7,13 +7,23 @@ const TodolistBlock = styled.ul`
 
   padding: 20px 32px 48px;
   margin: 0;
+  overflow-y: auto;
 `;
 
-function Todolist() {
+function Todolist({ todos, deleteItem, toggle }) {
   return (
     <>
       <TodolistBlock>
-        <Todoitem />
+        {todos.map((todo) => {
+          return (
+            <Todoitem
+              todo={todo}
+              deleteItem={deleteItem}
+              key={todo.id}
+              toggle={toggle}
+            />
+          );
+        })}
       </TodolistBlock>
     </>
   );
